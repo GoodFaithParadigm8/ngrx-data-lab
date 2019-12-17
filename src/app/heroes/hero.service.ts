@@ -1,68 +1,83 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+// import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { throwError as observableThrowError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+// import { throwError as observableThrowError } from 'rxjs';
+// import { catchError, tap } from 'rxjs/operators';
+
+import {
+  EntityCollectionServiceBase,
+  EntityCollectionServiceElementsFactory
+} from 'ngrx-data';
 
 import { Hero, ToastService } from '../core';
 // import { HeroesModule } from './heroes.module';
 
 const api = '/api';
 
+// @Injectable({ providedIn: 'root' })
+// export class HeroService {
+//   constructor(private http: HttpClient, private toastService: ToastService) {}
+
 @Injectable({ providedIn: 'root' })
-export class HeroService {
-  constructor(private http: HttpClient, private toastService: ToastService) {}
-
-  logout() {
-    return this.http.get(`${api}/logout`);
+export class HeroService extends EntityCollectionServiceBase<Hero> {
+  constructor(
+    serviceElementsFactory: EntityCollectionServiceElementsFactory,
+    // private http: HttpClient,
+    // private toastService: ToastService
+    ) {
+    super('Hero', serviceElementsFactory);
   }
 
-  getProfile() {
-    return this.http.get<any>(`${api}/profile`);
-  }
+  // logout() {
+  //   return this.http.get(`${api}/logout`);
+  // }
 
-  getAll() {
-    const url = `${api}/heroes`;
-    const msg = 'Heroes retrieved successfully!';
-    return this.http
-      .get<Hero[]>(url)
-      .pipe(
-        tap(() => this.toastService.openSnackBar(msg, 'GET')),
-        catchError(this.handleError)
-      );
-  }
+  // getProfile() {
+  //   return this.http.get<any>(`${api}/profile`);
+  // }
 
-  private handleError(res: HttpErrorResponse) {
-    console.error(res.error);
-    return observableThrowError(res.error || 'Server error');
-  }
+  // getAll() {
+  //   const url = `${api}/heroes`;
+  //   const msg = 'Heroes retrieved successfully!';
+  //   return this.http
+  //     .get<Hero[]>(url)
+  //     .pipe(
+  //       tap(() => this.toastService.openSnackBar(msg, 'GET')),
+  //       catchError(this.handleError)
+  //     );
+  // }
 
-  delete(hero: Hero) {
-    return this.http
-      .delete(`${api}/hero/${hero.id}`)
-      .pipe(
-        tap(() =>
-          this.toastService.openSnackBar(`Hero ${hero.name} deleted`, 'DELETE')
-        )
-      );
-  }
+  // private handleError(res: HttpErrorResponse) {
+  //   console.error(res.error);
+  //   return observableThrowError(res.error || 'Server error');
+  // }
 
-  add(hero: Hero) {
-    return this.http
-      .post<Hero>(`${api}/hero/`, hero)
-      .pipe(
-        tap(() =>
-          this.toastService.openSnackBar(`Hero ${hero.name} added`, 'POST')
-        )
-      );
-  }
+  // delete(hero: Hero) {
+  //   return this.http
+  //     .delete(`${api}/hero/${hero.id}`)
+  //     .pipe(
+  //       tap(() =>
+  //         this.toastService.openSnackBar(`Hero ${hero.name} deleted`, 'DELETE')
+  //       )
+  //     );
+  // }
 
-  update(hero: Hero) {
-    return this.http
-      .put<Hero>(`${api}/hero/${hero.id}`, hero)
-      .pipe(
-        tap(() =>
-          this.toastService.openSnackBar(`Hero ${hero.name} updated`, 'PUT')
-        )
-      );
-  }
+  // add(hero: Hero) {
+  //   return this.http
+  //     .post<Hero>(`${api}/hero/`, hero)
+  //     .pipe(
+  //       tap(() =>
+  //         this.toastService.openSnackBar(`Hero ${hero.name} added`, 'POST')
+  //       )
+  //     );
+  // }
+
+  // update(hero: Hero) {
+  //   return this.http
+  //     .put<Hero>(`${api}/hero/${hero.id}`, hero)
+  //     .pipe(
+  //       tap(() =>
+  //         this.toastService.openSnackBar(`Hero ${hero.name} updated`, 'PUT')
+  //       )
+  //     );
+  // }
 }

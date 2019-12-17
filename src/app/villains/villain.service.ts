@@ -1,95 +1,111 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+// import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { throwError as observableThrowError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+// import { throwError as observableThrowError } from 'rxjs';
+// import { catchError, map, tap } from 'rxjs/operators';
+
+// Added ngrx-data
+import {
+  EntityCollectionServiceBase,
+  EntityCollectionServiceElementsFactory
+} from 'ngrx-data';
 
 import { ToastService, Villain } from '../core';
 
 const api = '/api';
 
+// @Injectable({ providedIn: 'root' })
+// export class VillainService {
+//   constructor(private http: HttpClient, private toastService: ToastService) {}
+
 @Injectable({ providedIn: 'root' })
-export class VillainService {
-  constructor(private http: HttpClient, private toastService: ToastService) {}
-
-  logout() {
-    return this.http.get(`${api}/logout`);
+export class VillainService extends EntityCollectionServiceBase<Villain> {
+  constructor(
+    serviceElementsFactory: EntityCollectionServiceElementsFactory,
+    // private http: HttpClient,
+    // private toastService: ToastService,
+    ) {
+    super('Villain', serviceElementsFactory);
   }
 
-  getProfile() {
-    return this.http.get<any>(`${api}/profile`);
-  }
+  // logout() {
+  //   return this.http.get(`${api}/logout`);
+  // }
 
-  getVillain(id: number) {
-    return this.http
-      .get<Array<Villain>>(`${api}/villains/${id}`)
-      .pipe(
-        map(villain => villain),
-        tap(() =>
-          this.toastService.openSnackBar(
-            'Villain retrieved successfully!',
-            'GET'
-          )
-        ),
-        catchError(this.handleError)
-      );
-  }
+  // getProfile() {
+  //   return this.http.get<any>(`${api}/profile`);
+  // }
 
-  getAll() {
-    return this.http
-      .get<Array<Villain>>(`${api}/villains`)
-      .pipe(
-        map(villains => villains),
-        tap(() =>
-          this.toastService.openSnackBar(
-            'Villains retrieved successfully!',
-            'GET'
-          )
-        ),
-        catchError(this.handleError)
-      );
-  }
+  // getVillain(id: number) {
+  //   return this.http
+  //     .get<Array<Villain>>(`${api}/villains/${id}`)
+  //     .pipe(
+  //       map(villain => villain),
+  //       tap(() =>
+  //         this.toastService.openSnackBar(
+  //           'Villain retrieved successfully!',
+  //           'GET'
+  //         )
+  //       ),
+  //       catchError(this.handleError)
+  //     );
+  // }
 
-  private handleError(res: HttpErrorResponse) {
-    console.error(res.error);
-    return observableThrowError(res.error || 'Server error');
-  }
+  // getAll() {
+  //   return this.http
+  //     .get<Array<Villain>>(`${api}/villains`)
+  //     .pipe(
+  //       map(villains => villains),
+  //       tap(() =>
+  //         this.toastService.openSnackBar(
+  //           'Villains retrieved successfully!',
+  //           'GET'
+  //         )
+  //       ),
+  //       catchError(this.handleError)
+  //     );
+  // }
 
-  delete(villain: Villain) {
-    return this.http
-      .delete(`${api}/villain/${villain.id}`)
-      .pipe(
-        tap(() =>
-          this.toastService.openSnackBar(
-            `Villain ${villain.name} deleted`,
-            'DELETE'
-          )
-        )
-      );
-  }
+  // private handleError(res: HttpErrorResponse) {
+  //   console.error(res.error);
+  //   return observableThrowError(res.error || 'Server error');
+  // }
 
-  add(villain: Villain) {
-    return this.http
-      .post<Villain>(`${api}/villain/`, villain)
-      .pipe(
-        tap(() =>
-          this.toastService.openSnackBar(
-            `Villain ${villain.name} added`,
-            'POST'
-          )
-        )
-      );
-  }
+  // delete(villain: Villain) {
+  //   return this.http
+  //     .delete(`${api}/villain/${villain.id}`)
+  //     .pipe(
+  //       tap(() =>
+  //         this.toastService.openSnackBar(
+  //           `Villain ${villain.name} deleted`,
+  //           'DELETE'
+  //         )
+  //       )
+  //     );
+  // }
 
-  update(villain: Villain) {
-    return this.http
-      .put<Villain>(`${api}/villain/${villain.id}`, villain)
-      .pipe(
-        tap(() =>
-          this.toastService.openSnackBar(
-            `Villain ${villain.name} updated`,
-            'PUT'
-          )
-        )
-      );
-  }
+  // add(villain: Villain) {
+  //   return this.http
+  //     .post<Villain>(`${api}/villain/`, villain)
+  //     .pipe(
+  //       tap(() =>
+  //         this.toastService.openSnackBar(
+  //           `Villain ${villain.name} added`,
+  //           'POST'
+  //         )
+  //       )
+  //     );
+  // }
+
+  // update(villain: Villain) {
+  //   return this.http
+  //     .put<Villain>(`${api}/villain/${villain.id}`, villain)
+  //     .pipe(
+  //       tap(() =>
+  //         this.toastService.openSnackBar(
+  //           `Villain ${villain.name} updated`,
+  //           'PUT'
+  //         )
+  //       )
+  //     );
+  // }
 }
