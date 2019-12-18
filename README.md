@@ -1,3 +1,9 @@
+## Documentation generated with CompoDoc
+
+Great for NestJs and Angular projects. Try [compodoc](https://compodoc.app/) on your projects.
+
+Explore [ngrx-Data-Lab](https://docs010ngrx.z19.web.core.windows.net/) docs.
+
 # NgRx Data Lab
 
 Want to learn how to use NgRx without all of the boilerplate? Try out [ngrx-data](https://github.com/johnpapa/angular-ngrx-data) with our quickstart!
